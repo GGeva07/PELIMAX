@@ -1,0 +1,42 @@
+<div class="row">
+    <div class="text-center">
+        <h1>Listado de Generos</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 col-sm-4 mb-3 mt-3">
+        <a href="/generos/create" class="btn btn-dark">Agregar un genero
+            <i class="bi bi-plus-circle"></i></a>
+    </div>
+</div>
+
+{{#if hasGeneros}}
+<div class="row">
+    {{#each ListadeGeneros}}
+    <div class="col-12 col-sm-4 mb-3">
+        <div class="card shadow">
+            <div class="card-body">
+                <h3 class="card-title text-center">{{this.name}}</h3>
+                <form method="POST" action="/generos/delete">
+                    <input type=" hidden" name="GeneroId" value={{this.id}} hidden>
+                    <button class="mensaje-confirmacion btn btn-danger delete-genero float-end" type="submit">Eliminar
+                        <i class="bi bi-x-circle"></i></button>
+                    <a href="/generos/edit/{{this.id}}" class="btn btn-warning float-end me-2">Editar <i
+                            class="bi bi-pencil-square"></i></a>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</div>
+{{else}}
+<div class="row d-flex justify-content-center">
+    <div class="col-12 col-sm-4">
+        <div class="alert alert-info" role="alert">
+            <i class="bi bi-exclamation-circle-fill me-1"></i>No tienes generos disponibles agrega una nuevo
+        </div>
+    </div>
+
+</div>
+{{/if}}
