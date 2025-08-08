@@ -1,0 +1,83 @@
+<div class="row d-flex justify-content-center">
+    <div class="col-12 col-sm-5">
+        {{#if isEditing}}
+        <div class="card mt-5 shadow">
+            <div class="card-header bg-dark">
+                <h3 class="card-title" style="color: white;">Crear una serie</h3>
+            </div>
+            <div class="card-body">
+                <form action="/series/edit" method="POST" class="form">
+                    <label for="ImagenSerie">Portada de la serie: </label>
+                    <input type="text" class="form-control" id="Id" name="Id" value="{{Series.id}}" hidden>
+
+                    <input type="url" class="form-control" id="ImagenSerie" name="ImagenSerie"
+                        placeholder="https://example.com/imagen.jpg" required value="{{Series.portada}}">
+
+                    <label for="NombreSerie" class="form-label">Nombre:</label>
+                    <input type="text" class="form-control" name="NombreSerie" id="NombreSerie" required
+                        value="{{Series.titulo}}">
+
+                    <label for="linkSerie" class="form-label">Enlace de la serie:</label>
+                    <input type="text" class="form-control" id="linkSerie" name="linkSerie"
+                        placeholder="https://example.com/serie" required value="{{Series.enlace}}">
+
+                    <label for="GeneroSerie" class="form-label">Género:</label>
+                    <select class="form-select" name="GeneroSerie" id="GeneroSerie" required>
+                        <option value="{{Series.genero}}" style="color: black;" selected>{{Series.genero}}</option>
+                        {{#if hasGeneros}}
+                        {{#each ListadeGeneros}}
+                        <option value="{{this.name}}" style="color: black;">{{this.name}}</option>
+                        {{/each}}
+                        {{else}}
+                        <option value="0" disabled>No hay géneros disponibles agrega un nuevo genero</option>
+                        {{/if}}
+                    </select>
+
+                    <div class="float-end mt-2">
+                        <a href="/series/index" class="btn btn-warning">Volver</a>
+                        <button class="btn btn-success" type="subtmit">Crear</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        {{else}}
+        <div class="card mt-5 shadow">
+            <div class="card-header bg-dark">
+                <h3 class="card-title" style="color: white;">Crear una serie</h3>
+            </div>
+            <div class="card-body">
+                <form action="/series/create" method="POST" class="form">
+                    <label for="ImagenSerie">Portada de la serie:</label>
+                    <input type="url" class="form-control" id="ImagenSerie" name="ImagenSerie"
+                        placeholder="https://example.com/imagen.jpg" required>
+
+                    <label for="NombreSerie" class="form-label">Nombre: </label>
+                    <input type="text" class="form-control" name="NombreSerie" id="NombreSerie" required>
+
+                    <label for="linkSerie" class="form-label">Enlace de la serie:</label>
+                    <input type="text" class="form-control" id="linkSerie" name="linkSerie"
+                        placeholder="https://example.com/serie" required>
+
+                    <label for="GeneroSerie" class="form-label">Género:</label>
+                    <select class="form-select" name="GeneroSerie" id="GeneroSerie" required>
+                        <option value="" disabled selected>Seleccione un género</option>
+                        {{#if hasGeneros}}
+                        {{#each ListadeGeneros}}
+                        <option value="{{this.name}}" style="color: black;">{{this.name}}</option>
+                        {{/each}}
+                        {{else}}
+                        <option value="0" disabled>No hay géneros disponibles</option>
+                        {{/if}}
+                    </select>
+
+                    <div class="float-end mt-2">
+                        <a href="/series/index" class="btn btn-warning">Volver</a>
+                        <button class="btn btn-success" type="subtmit">Crear</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        {{/if}}
+
+    </div>
+</div>

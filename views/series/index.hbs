@@ -1,0 +1,47 @@
+<div class="row">
+    <div class="text-center">
+        <h1>Series disponibles</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 col-sm-4 mb-3 mt-3">
+        <a href="/series/create" class="btn btn-dark">Agregar una serie
+            <i class="bi bi-plus-circle"></i></a>
+    </div>
+</div>
+{{#if hasSeries}}
+<div class="row">
+    {{#each ListadeSeries}}
+    <div class="col-12 col-sm-4 mb-3">
+        <div class="card shadow">
+            <div class="card-body">
+                <img src="{{this.portada}}" alt="{{this.titulo}}" width="200" height="200"
+                    class="img-fluid rounded-circle d-block mx-auto mb-3">
+                <h3 class="card-title text-center">{{this.titulo}}</h3>
+                <h5 class="text-center" style="color: grey;">{{this.genero}}</h5>
+
+                <form method="POST" class="mt-2" action="/series/delete">
+                    <input type="hidden" name="SerieId " value={{this.id}}>
+                    <button class="mensaje-confirmacion btn btn-danger float-end" type="submit">Eliminar <i
+                            class="bi bi-x-circle"></i></button>
+                    <a href="/series/edit/{{this.id}}" class="btn btn-warning float-end me-2">Editar <i
+                            class="bi bi-pencil-square"></i></a>
+
+                </form>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</div>
+
+{{else}}
+<div class="row d-flex justify-content-center">
+    <div class="col-12 col-sm-4">
+        <div class="alert alert-info" role="alert">
+            <i class="bi bi-exclamation-circle-fill me-1"></i>No tienes series disponibles agrega una nuevo
+        </div>
+    </div>
+
+</div>
+{{/if}}
