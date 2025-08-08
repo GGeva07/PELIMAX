@@ -1,0 +1,21 @@
+<form action="/register" method="POST" class="p-4 rounded shadow-sm bg-white"
+    style="max-width: 400px; margin: 40px auto;">
+    <h2 class="mb-4 text-center">Registro</h2>
+    {{#if error}}
+    <div class="alert alert-danger text-center">{{error}}</div>
+    {{/if}}
+    <div class="mb-3">
+        <label for="email" class="form-label">Correo electrónico</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="ejemplo@correo.com" required
+            autocomplete="email">
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">Contraseña</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Mínimo 6 caracteres"
+            required minlength="6" autocomplete="new-password">
+    </div>
+    <button type="submit" class="btn btn-dark w-100 mb-2">Registrarse</button>
+    <div class="text-center">
+        <a href="/login" class="small">¿Ya tienes cuenta? <strong>Inicia sesión</strong></a>
+    </div>
+</form>
