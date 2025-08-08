@@ -1,0 +1,63 @@
+<div class="row">
+    <div class="col-12 col-sm-4">
+        <h4>Animes disponibles</h4>
+    </div>
+    <div class="col-12 col-sm-8">
+        <div class="row inline">
+            <form action="/home/buscar" method="POST" class="form">
+                <div class="col-sm-4 float-end">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Buscar por título" name="titulo"
+                            aria-label="Buscar por título" aria-describedby="button-addon2">
+                        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Buscar <i
+                                class="bi bi-search"></i></button>
+                    </div>
+                </div>
+                <div class="col-sm-4 float-end me-2">
+                    <select class="form-select" name="GeneroSerie" id="GeneroSerie">
+                        <option value="{{Series.genero}}" style="color: black;" selected>Selecciona un genero a buscar
+
+                        </option>
+                        {{#if hasGeneros}}
+                        {{#each ListadeGeneros}}
+                        <option value="{{this.name}}" style="color: black;">{{this.name}}
+                        </option>
+                        {{/each}}
+                        {{else}}
+                        <option value="0" disabled>No hay géneros disponibles agrega un nuevo genero</option>
+                        {{/if}}
+                    </select>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+{{#if hasSeries}}
+<div class="row">
+    {{#each ListadeSeries}}
+    <div class="col-12 col-sm-4 mb-3">
+        <div class="card shadow">
+            <div class="card-home card-body text-center">
+                <img src="{{this.portada}}" alt="{{this.titulo}}" class="img-fluid rounded-circle d-block mx-auto mb-3">
+                <h3 class="card-title text-center">{{this.titulo}}</h3>
+                <h5 class="text-center" style="color: grey;">{{this.genero}}</h5>
+                <a href="/details/index/{{this.id}}" class="btn btn-dark">Ver Detalles</a>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</div>
+
+{{else}}
+<div class="row d-flex justify-content-center">
+    <div class="col-12 col-sm-4">
+        <div class="alert alert-info" role="alert">
+            <i class="bi bi-exclamation-circle-fill me-1"></i>Lo sentimos, serie no encontrada
+            <a class="btn btn-volver" href="/">Volver</a>
+        </div>
+    </div>
+
+</div>
+{{/if}}
