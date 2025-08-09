@@ -1,3 +1,4 @@
+import fs from "fs";
 import path from "path";
 
 //imports propios
@@ -20,6 +21,21 @@ class Respository {
 
   GetAll(callback) {
     this.fileCrud.getAllDataFromFile(this.dataPath, callback);
+  }
+
+  write(filePath, data) {
+    try {
+      fs.writeFileSync(filePath, JSON.stringify(data, null, 2), "utf-8");
+    } catch (e) {}
+  }
+  read(filePath) {
+    try {
+      if (!fs.existsSync(filePath)) return [];
+      const data = fs.readFileSync(filePath, "utf-8");
+      return JSON.parse(data);
+    } catch (e) {
+      return [];
+    }
   }
 
   Delete(id) {
