@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 
 const loginController = {
   showLogin: (req, res) => {
-    res.render("login/login");
+    res.render("login/login", { error: null });
   },
   showRegister: (req, res) => {
     res.render("login/register");
@@ -21,10 +21,22 @@ const loginController = {
   },
   login: (req, res) => {
     const { email, password } = req.body;
-    const usuario = usuarioModel.findByEmail(email);
-    if (!usuario || !usuarioModel.comparePassword(password, usuario.password)) {
-      return res.render("login/login", { error: "Credenciales inválidas." });
+    let errorMsg = null;
+    if (!email || email.length > 50) {
+      errorMsg = "error";
+    } else {
+      const usuario = usuarioModel.findByEmail(email);
+      if (
+        !usuario ||
+        !usuarioModel.comparePassword(password, usuario.password)
+      ) {
+        errorMsg = "Credenciales incorrectas";
+      }
     }
+    if (errorMsg) {
+      return res.render("login/login", { error: errorMsg });
+    }
+    const usuario = usuarioModel.findByEmail(email);
     req.session.usuario = usuario;
     res.redirect("/home");
   },

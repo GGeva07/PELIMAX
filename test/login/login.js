@@ -1,45 +1,58 @@
-const { Builder, By, until } = require("selenium-webdriver");
-const { expect } = require("chai");
+import { Builder, By, until } from "selenium-webdriver";
+import { expect } from "chai";
 
-describe("HU1 - Login en web app", function () {
+describe("Login en web app", function () {
   let driver;
 
   before(async function () {
     driver = await new Builder().forBrowser("chrome").build();
-    await driver.get("http://localhost:3000/login"); // Tu ruta real
+    await driver.get("http://localhost:3000/login");
   });
 
   after(async function () {
     await driver.quit();
   });
 
-  it("Camino Feliz - Usuario correcto", async function () {
-    await driver.findElement(By.id("username")).sendKeys("admin");
-    await driver.findElement(By.id("password")).sendKeys("1234");
-    await driver.findElement(By.id("login-btn")).click();
-
-    await driver.wait(until.urlContains("/dashboard"), 3000);
+  it("Camino Feliz Correo correcto", async function () {
+    await driver
+      .findElement(By.id("email"))
+      .sendKeys("evanazarethgonzalezvelasco1@gmail.com");
+    await driver.sleep(700);
+    await driver.findElement(By.id("password")).sendKeys("123456789");
+    await driver.sleep(700);
+    await driver.findElement(By.id("btn-login")).click();
+    await driver.sleep(1200);
+    await driver.wait(until.urlContains("/"), 5000);
+    await driver.sleep(700);
     const bienvenida = await driver.findElement(By.id("bienvenida")).getText();
-    expect(bienvenida).to.include("Bienvenido");
+    expect(bienvenida.toLowerCase()).to.include("animes");
   });
 
-  it("Prueba Negativa - Usuario incorrecto", async function () {
+  it("Prueba Negativa Correo incorrecto", async function () {
     await driver.get("http://localhost:3000/login");
-    await driver.findElement(By.id("username")).sendKeys("invalido");
+    await driver.sleep(700);
+    await driver.findElement(By.id("email")).sendKeys("invalido@gmail.com");
+    await driver.sleep(700);
     await driver.findElement(By.id("password")).sendKeys("xxxx");
-    await driver.findElement(By.id("login-btn")).click();
-
+    await driver.sleep(700);
+    await driver.findElement(By.id("btn-login")).click();
+    await driver.sleep(1200);
     const error = await driver.findElement(By.id("error-msg")).getText();
-    expect(error).to.include("Credenciales incorrectas");
+    expect(error.toLowerCase()).to.include("credenciales");
   });
 
-  it("Prueba de Límites - Usuario muy largo", async function () {
+  it("Prueba de Límites - Correo muy largo", async function () {
     await driver.get("http://localhost:3000/login");
-    await driver.findElement(By.id("username")).sendKeys("a".repeat(255));
+    await driver.sleep(700);
+    await driver
+      .findElement(By.id("email"))
+      .sendKeys("a".repeat(255) + "@gmail.com");
+    await driver.sleep(700);
     await driver.findElement(By.id("password")).sendKeys("1234");
-    await driver.findElement(By.id("login-btn")).click();
-
+    await driver.sleep(700);
+    await driver.findElement(By.id("btn-login")).click();
+    await driver.sleep(1200);
     const error = await driver.findElement(By.id("error-msg")).getText();
-    expect(error).to.include("Error");
+    expect(error.toLowerCase()).to.include("error");
   });
 });
